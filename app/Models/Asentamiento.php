@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use App\Models\CodigoPostal;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Asentamiento extends Model
 {
-    use HasFactory;
-
     protected $table = 'asentamientos';
 
     # Relationships

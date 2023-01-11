@@ -4,12 +4,12 @@ namespace App\Models;
 
 use App\Models\Asentamiento;
 use App\Models\EntidadFederativa;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kirschbaum\PowerJoins\PowerJoins;
 
 class CodigoPostal extends Model
 {
-    use HasFactory;
+    use PowerJoins;
 
     protected $table = 'codigos_postales';
 

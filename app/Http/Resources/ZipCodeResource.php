@@ -25,12 +25,20 @@ class ZipCodeResource extends JsonResource implements Presentable
      */
     public function toArray($request)
     {
+        // return [
+        //     'zip_code'       => $this->d_codigo,
+        //     'locality'       => $this->present()->locality,
+        //     'federal_entity' => new FederalEntityResource($this->entidadFederativa),
+        //     'settlements'    => SettlementResource::collection($this->asentamientos),
+        //     'municipality'   => new MunicipalityResource($this->municipio),
+        // ];
+
         return [
             'zip_code'       => $this->d_codigo,
             'locality'       => $this->present()->locality,
-            'federal_entity' => new FederalEntityResource($this->entidadFederativa),
+            'federal_entity' => new FederalEntityResource($this),
             'settlements'    => SettlementResource::collection($this->asentamientos),
-            'municipality'   => new MunicipalityResource($this->municipio),
+            'municipality'   => new MunicipalityResource($this),
         ];
     }
 }
