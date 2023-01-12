@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('id_asenta_cpcons')->index();   // key
             $table->string('d_asenta')->index();            // name
             $table->string('d_zona', 12);                   // zone_type
-            $table->integer('c_tipo_asenta');
             $table->string('d_tipo_asenta', 32);            // settlement_type
 
             $table->foreignId('codigo_postal_id')->constrained('codigos_postales');

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $sqlFileContents = file_get_contents(database_path('backup/zip_codes_api-202301120639.sql'));
+        $sqlFileContents = file_get_contents(database_path('backup/zip_codes_api-202301121000.sql'));
 
         DB::unprepared($sqlFileContents);
     }

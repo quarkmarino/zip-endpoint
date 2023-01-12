@@ -55,15 +55,12 @@ class CodigosPostalesImport implements ToCollection, WithHeadingRow, WithChunkRe
                 ]
             );
 
-            $this->asentamiento = Asentamiento::firstOrCreate(
+            $this->asentamiento = Asentamiento::create(
                 [
                     'id_asenta_cpcons' => Arr::get($row, 'id_asenta_cpcons'),
                     'd_asenta' => Arr::get($row, 'd_asenta'),
                     'd_zona' => Arr::get($row, 'd_zona'),
-                    'c_tipo_asenta' => Arr::get($row, 'c_tipo_asenta'),
                     'd_tipo_asenta' => Arr::get($row, 'd_tipo_asenta'),
-                ],
-                [
                     'codigo_postal_id' => $this->codigoPostal->id,
                 ]
             );
