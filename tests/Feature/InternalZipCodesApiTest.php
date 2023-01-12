@@ -88,6 +88,6 @@ class InternalZipCodesApiTest extends TestCase
     {
         $invalidZipCode = '12sd1';
         $response = $this->get('/api/zip-codes/' . $invalidZipCode);
-        $response->assertStatus(500);
+        $response->assertStatus(404);
     }
 }
