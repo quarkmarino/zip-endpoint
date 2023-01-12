@@ -332,14 +332,14 @@ manera manual (postman y curl) arrojan resultados de tiempos extremos en la prim
 tanto para la API de reto como para la de referencia.
 
 Desde mi ISP
-    - Postman
-        - <img src="screenshots/Screenshot from 2023-01-12 03-11-46.png" alt="Velocidad de respuesta https://jobs.backbonesystems.io/api/zip-codes/10630">
-        - <img src="screenshots/Screenshot from 2023-01-12 03-12-01.png" alt="Velocidad de respuesta https://backbonesystems.marianoescalera.me/api/zip-codes/10630">
-    - cURL
-        - <img src="screenshots/Screenshot from 2023-01-12 03-16-48.png" alt="Velocidad de respuesta ambos end-points">
+    Postman
+        <img src="screenshots/Screenshot from 2023-01-12 03-11-46.png" alt="Velocidad de respuesta https://jobs.backbonesystems.io/api/zip-codes/10630">
+        <img src="screenshots/Screenshot from 2023-01-12 03-12-01.png" alt="Velocidad de respuesta https://backbonesystems.marianoescalera.me/api/zip-codes/10630">
+    cURL
+        <img src="screenshots/Screenshot from 2023-01-12 03-16-48.png" alt="Velocidad de respuesta ambos end-points">
 Desde un VPS
-    - Linode
-        - <img src="screenshots/Screenshot from 2023-01-12 03-16-41.png" alt="Velocidad de respuesta ambos end-points">
+    Linode
+        <img src="screenshots/Screenshot from 2023-01-12 03-16-41.png" alt="Velocidad de respuesta ambos end-points">
 
 # Mas Información (otras experiencias)
 
