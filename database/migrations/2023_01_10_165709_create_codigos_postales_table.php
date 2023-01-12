@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('codigos_postales', function (Blueprint $table) {
             $table->id();
 
-            $table->string('d_codigo')->index();                    // zip_code
-            $table->string('d_ciudad')->index()->nullable()->default(null);  // locality
-
-            $table->index(['d_codigo', 'd_ciudad']);
+            $table->integer('d_codigo')->index();                                // zip_code
+            $table->string('d_ciudad')->nullable()->default(null);     // locality
 
             $table->foreignId('entidad_federativa_id')->constrained('entidades_federativas');
             $table->foreignId('municipio_id')->constrained('municipios');
+
+            $table->index(['d_codigo', 'd_ciudad']);
 
             $table->timestamps();
         });

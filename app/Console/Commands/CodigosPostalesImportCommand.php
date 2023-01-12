@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Imports\CodigosPostalesImport;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Excel;
 
 class CodigosPostalesImportCommand extends Command
@@ -29,12 +30,12 @@ class CodigosPostalesImportCommand extends Command
      */
     public function handle()
     {
-        $this->output->title('Starting "Codigos Postales" import');
+        $this->output->title('Starting "Codigos Postales" import @ '.Carbon::now()->toDateTimeString());
 
         (new CodigosPostalesImport)
             ->withOutput($this->output)
             ->import('CPdescarga.txt', 'assets', Excel::CSV);
 
-        $this->output->success('Import successful!');
+        $this->output->success('Import successful!, finished @ '.Carbon::now()->toDateTimeString());
     }
 }

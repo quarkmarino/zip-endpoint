@@ -28,9 +28,13 @@ class ZipCodeResource extends JsonResource implements Presentable
         return [
             'zip_code'       => $this->d_codigo,
             'locality'       => $this->present()->locality,
-            'federal_entity' => new FederalEntityResource($this->entidadFederativa),
+            'federal_entity' => $this->relationLoaded('entidadFederativa')
+                ? new FederalEntityResource($this->entidadFederativa)
+                : new FederalEntityResource($this),
             'settlements'    => SettlementResource::collection($this->asentamientos),
-            'municipality'   => new MunicipalityResource($this->municipio),
+            'municipality'   => $this->relationLoaded('municipio')
+                ? new MunicipalityResource($this->municipio)
+                : new MunicipalityResource($this),
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ZipCodeWithJoinedDataResource;
 use App\Http\Resources\ZipCodeResource;
 use App\Models\CodigoPostal;
 use Illuminate\Http\Request;
@@ -58,7 +57,7 @@ class ZipCodeController extends Controller
             ->with(['asentamientos'])
             ->firstOrFail();
 
-        return new ZipCodeWithJoinedDataResource($zipCodeResult);
+        return new ZipCodeResource($zipCodeResult);
     }
 
     /**

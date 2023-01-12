@@ -31,45 +31,36 @@ class CodigosPostalesImport implements ToCollection, WithHeadingRow, WithChunkRe
         Asentamiento::unguard();
 
         $rows->each(function ($row) {
-            $c_estado = Arr::get($row, 'c_estado');
-            $this->entidadFederativa = Cache::rememberForever("entidad-federativa:{$c_estado}", function () use ($row) {
-                return EntidadFederativa::firstOrCreate(
-                    ['c_estado' => Arr::get($row, 'c_estado'),],
-                    ['d_estado' => Arr::get($row, 'd_estado'),],
-                );
-            });
+            $this->entidadFederativa = EntidadFederativa::firstOrCreate(
+                ['c_estado' => Arr::get($row, 'c_estado'),],
+                ['d_estado' => Arr::get($row, 'd_estado'),],
+            );
 
-            $c_mnpio = Arr::get($row, 'c_mnpio');
-            $this->municipio = Cache::rememberForever("municipio:{$c_estado}:{$c_mnpio}", function () use ($row) {
-                return Municipio::firstOrCreate(
-                    [
-                        'c_mnpio' => Arr::get($row, 'c_mnpio'),
-                        'entidad_federativa_id' => $this->entidadFederativa->id,
-                    ],
-                    ['d_mnpio' => Arr::get($row, 'd_mnpio'),]
-                );
-            });
+            $this->municipio = Municipio::firstOrCreate(
+                [
+                    'c_mnpio' => Arr::get($row, 'c_mnpio'),
+                    'entidad_federativa_id' => $this->entidadFederativa->id,
+                ],
+                ['d_mnpio' => Arr::get($row, 'd_mnpio'),]
+            );
 
-            $d_codigo = Arr::get($row, 'd_codigo');
-            $d_ciudad = Arr::get($row, 'd_ciudad');
-            $this->codigoPostal = Cache::rememberForever("codigo-postal:{$c_estado}:{$d_ciudad}:{$c_mnpio}:{$d_codigo}", function () use ($row) {
-                return CodigoPostal::firstOrCreate(
-                    [
-                        'd_codigo' => Arr::get($row, 'd_codigo'),
-                        'd_ciudad' => Arr::get($row, 'd_ciudad')
-                    ],
-                    [
-                        'entidad_federativa_id' => $this->entidadFederativa->id,
-                        'municipio_id' => $this->municipio->id,
-                    ]
-                );
-            });
+            $this->codigoPostal = CodigoPostal::firstOrCreate(
+                [
+                    'd_codigo' => Arr::get($row, 'd_codigo'),
+                    'd_ciudad' => Arr::get($row, 'd_ciudad')
+                ],
+                [
+                    'entidad_federativa_id' => $this->entidadFederativa->id,
+                    'municipio_id' => $this->municipio->id,
+                ]
+            );
 
             $this->asentamiento = Asentamiento::firstOrCreate(
                 [
                     'id_asenta_cpcons' => Arr::get($row, 'id_asenta_cpcons'),
                     'd_asenta' => Arr::get($row, 'd_asenta'),
                     'd_zona' => Arr::get($row, 'd_zona'),
+                    'c_tipo_asenta' => Arr::get($row, 'c_tipo_asenta'),
                     'd_tipo_asenta' => Arr::get($row, 'd_tipo_asenta'),
                 ],
                 [

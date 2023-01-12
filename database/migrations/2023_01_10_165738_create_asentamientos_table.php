@@ -16,24 +16,16 @@ return new class extends Migration
         Schema::create('asentamientos', function (Blueprint $table) {
             $table->id();
 
-            $table->string('id_asenta_cpcons')->index();     // key
-            $table->string('d_asenta')->index();             // name
-            $table->string('d_zona')->index();               // zone_type
-            $table->string('d_tipo_asenta')->index();        // settlement_type
-
-            $table->index(['id_asenta_cpcons', 'd_asenta', 'd_zona']);
-
-                // $table->string('c_tipo_asenta'); // With Enum
-                // $table->string('d_tipo_asenta'); // With Enum
+            $table->integer('id_asenta_cpcons')->index();   // key
+            $table->string('d_asenta')->index();            // name
+            $table->string('d_zona', 12);                   // zone_type
+            $table->integer('c_tipo_asenta');
+            $table->string('d_tipo_asenta', 32);            // settlement_type
 
             $table->foreignId('codigo_postal_id')->constrained('codigos_postales');
 
-            // $table->foreignId('entidad_federativa_id')->constrained('entidades_federativas');
-            // $table->foreignId('municipio_id')->constrained('municipios');
+            $table->index(['id_asenta_cpcons', 'd_asenta', 'd_zona', 'd_tipo_asenta'], 'cpcons_asenta_zona_tipo');
 
-            // not reported
-            // $table->string('d_CP');
-            // $table->string('c_oficina');
             $table->timestamps();
         });
     }

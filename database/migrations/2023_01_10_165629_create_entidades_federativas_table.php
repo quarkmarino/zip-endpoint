@@ -17,14 +17,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('c_estado')->index();
-            $table->string('d_estado')->index();
-
-            $table->index(['c_estado', 'd_estado']);
-
-            // $table->string('key');  // c_estado
-            // $table->string('name'); // d_estado
-
+            $table->string('d_estado');
             $table->string('code')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

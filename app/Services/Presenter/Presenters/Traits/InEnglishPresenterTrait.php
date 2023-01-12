@@ -12,6 +12,8 @@ trait InEnglishPresenterTrait
      */
     public function englishCharsOnly(string $propertyName): string
     {
-        return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $this->$propertyName);
+        $string = str_replace(array("Ñ", "ñ"), array("?", "?"), $this->$propertyName);
+
+        return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
     }
 }

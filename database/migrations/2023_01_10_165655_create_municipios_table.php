@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('municipios', function (Blueprint $table) {
             $table->id();
-            $table->string('c_mnpio')->index();
-            $table->string('d_mnpio')->index();
 
-            $table->index(['c_mnpio', 'd_mnpio']);
+            $table->integer('c_mnpio')->index();
+            $table->string('d_mnpio');
 
             $table->foreignId('entidad_federativa_id')->constrained('entidades_federativas');
+
+            $table->index(['c_mnpio', 'entidad_federativa_id']);
+
             $table->timestamps();
         });
     }
