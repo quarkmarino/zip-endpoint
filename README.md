@@ -252,7 +252,13 @@ Cada mecanismo tiene sus ventajas y desventajas, por ejemplo:
     - (+) El mas balanceado
 
 Aunque en realidad todos son bastante eficientes, gracias al manejo de indices en la base de datos
-todas las consultas responden en menos de (95ms a nivel de end-point) en promedio.
+todas las consultas a nivel de end-point, responden en menos de 85ms de manera externa y 15ms de manera interna en promedio.
+
+Externa
+<img src="screenshots/Screenshot from 2023-01-12 03-06-54.png" alt="Pruebas Externas">
+
+Interna
+<img src="screenshots/Screenshot from 2023-01-12 03-07-03.png" alt="Pruebas Internas">
 
 # Armado de la representación
 
@@ -322,7 +328,15 @@ Por lo que 2 pruebas han sido diseñadas
 - External
     - La razon principal de esta prueba es confirmar que la aplicacion responde en menos de 300ms
 siendo visitada desde algun punto suficientemente cercano y con poca latencita, ya que las pruebas realizadas de
-manera manual (postman y curl) arrojan resultados de tiempos extremos en la primera carga, tanto para la API de reto como para la de referencia.
+manera manual (postman y curl) arrojan resultados de tiempos extremos en la primera carga,
+tanto para la API de reto como para la de referencia.
+
+Desde mi ISP (Postman)
+<img src="screenshots/Screenshot from 2023-01-12 03-07-03.png" alt="Velocidad de respuesta https://jobs.backbonesystems.io/api/zip-codes/10630">
+<img src="screenshots/Screenshot from 2023-01-12 03-12-01.png" alt="Velocidad de respuesta https://backbonesystems.marianoescalera.me/api/zip-codes/10630">
+
+Desde un VPS (Linode)
+<img src="screenshots/Screenshot from 2023-01-12 03-16-41.png" alt="Velocidad de respuesta ambos end-points">
 
 # Mas Información (otras experiencias)
 
