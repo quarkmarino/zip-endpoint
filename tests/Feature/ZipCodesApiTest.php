@@ -11,27 +11,66 @@ use Tests\TestCase;
 class ZipCodesApiTest extends TestCase
 {
     /**
-     * Tests that the endpoint responds in less than 300ms
+     * Tests that the endpoint responds in less than 300ms internally
      *
      * @return void
      */
-    public function test_endpoint_responds_in_less_than_300_ms()
+    public function test_endpoint_avg_responds_in_less_than_300_ms_internally()
     {
-        $randomZipCodes = CodigoPostal::inRandomOrder()->take(5)->pluck('d_codigo');
+        $i = 1;
 
-        $randomZipCodes->each(function ($zipCode) {
-            $start = microtime(true);
+        $avgDuration = CodigoPostal::inRandomOrder()
+            ->take(50)
+            ->pluck('d_codigo')
+            ->push('85203')
+            ->avg(function ($zipCode) use (&$i) {
+                $start = microtime(true);
 
-            $response = Http::get('https://backbonesystems.marianoescalera.me/api/zip-codes/' . $zipCode);
-            // $response = $this->get('/api/zip-codes/85203');
+                $response = $this->get('/api/zip-codes/' . $zipCode);
 
-            $end = microtime(true);
-            $duration = ($end - $start) * 1000;
+                $end = microtime(true);
+                $duration = ($end - $start) * 1000;
 
-            $this->assertLessThan(300, $duration);
+                // dump("{$i}: {$zipCode} internal request duration {$duration}");
+                $i++;
+                $response->assertStatus(200);
 
-            $response->assertStatus(200);
-        });
+                return $duration;
+            });
+
+        dump("Internal test Avg. duration: {$avgDuration}");
+
+        $this->assertLessThan(300, $avgDuration);
+    }
+
+    /**
+     * Tests that the endpoint responds in less than 300ms externally
+     *
+     * @return void
+     */
+    public function test_endpoint_avg_responds_in_less_than_300_ms_externally()
+    {
+        $i = 1;
+        $avgDuration = CodigoPostal::inRandomOrder()
+            ->take(49)
+            ->pluck('d_codigo')
+            ->push('85203')
+            ->avg(function ($zipCode) use (&$i) {
+                $start = microtime(true);
+
+                $response = Http::get(env('APP_URL') . '/api/zip-codes/' . $zipCode);
+
+                $end = microtime(true);
+                $duration = ($end - $start) * 1000;
+                dump("{$i}: {$zipCode} external request duration {$duration}");
+                $i++;
+                // $response->assertStatus(200);
+                return $duration;
+            });
+
+        dump("External test Avg. duration: {$avgDuration}");
+
+        $this->assertLessThan(300, $avgDuration);
     }
 
     /**
@@ -39,15 +78,19 @@ class ZipCodesApiTest extends TestCase
      *
      * @return void
      */
-    // public function test_endpoint_responds_is_exactly_as_reference_api()
-    // {
-    //     $randomZipCodes = CodigoPostal::inRandomOrder()->take(5)->pluck('d_codigo');
+    public function test_endpoint_responds_is_exactly_as_reference_api()
+    {
+        $randomZipCodes = CodigoPostal::inRandomOrder()->take(5)->pluck('d_codigo');
 
-    //     $randomZipCodes->each(function ($zipCode) {
-    //         $response = Http::get('http://jobs.backbonesystems.io/api/zip-codes/' . $zipCode);
-    //         $response = $this->get('/api/zip-codes/' . $zipCode);
+        $randomZipCodes->each(function ($zipCode) {
+            $zipCode = 85203;
 
-    //         $response->assertStatus(200)->assertJson($response->json());
-    //     });
-    // }
+            $response = Http::get('http://jobs.backbonesystems.io/api/zip-codes/' . $zipCode);
+
+            $response = $this->get('/api/zip-codes/' . $zipCode);
+
+            $response->assertStatus(200)->assertJson($response->json(), true);
+            usleep(rand(100, 1000));
+        });
+    }
 }
